@@ -1,26 +1,86 @@
-<!DOCTYPE html>
-<html lang="pt_BR" xmlns="http://www.w3.org/1999/html">
+<!doctype html>
+<html lang="en">
+
 <head>
-    <meta charset="UTF-8">
+    <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Página Inicial</title>
-    <link rel="stylesheet" href="../css/style.css">
+    <title>Agendamento de Salas Politecnico</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
+    <link rel="stylesheet" href="styles.css">
 </head>
-<body>
-<h1>Página inicial</h1>
 
-<p>Uma pizza pra você!</p>
+<body class="d-flex flex-column min-vh-100">
+    <header>
+        <div class="p-3 bg-primary-subtle text-primary-emphasis">
+            <div class="container">
+                <div class="row">
+                    <div class="col-6">
+                        <h2>Agendamento de Salas</h2>
+                        <p>Colégio
+                            <span style="color: rgb(255, 99, 43);">Politécnico</span> UFSM
+                        </p>
+                    </div>
+                    <div class="col-md-2 offset-md-2">
+                        <button type="button" class="btn btn-primary btn-large" data-bs-toggle="modal"
+                            data-bs-target="#addSalaModal">
+                            <i class="bi bi-plus-circle-fill"></i>
+                            Criar Sala
+                        </button>
+                    </div>
+                    <div class="col-md-2">
+                        <button type="button" class="btn btn-primary btn-large">
+                            <i class="bi bi-calendar-plus-fill"></i>
+                            Agendar Sala
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
 
-<img src="../images/pizza.jpg" alt="foto de uma pizza"/>
+    <div class="modal fade" id="addSalaModal" aria-labelledby="addSalaModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="addSalaModalLabel">Criar Nova Sala</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="form-sala">
+                        <div class="mb-3">
+                            <label for="bloco" class="form-label">Bloco</label>
+                            <input type="text" class="form-control" id="bloco" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="nome" class="form-label">Nome da Sala</label>
+                            <input type="text" class="form-control" id="nome" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="tipo" class="form-label">Tipo</label>
+                            <select class="form-select" id="tipo" required>
+                                <option value="Sala de Aula">Sala de Aula</option>
+                                <option value="Laboratório">Laboratório</option>
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label for="capacidade" class="form-label">Capacidade</label>
+                            <input type="number" class="form-control" id="capacidade" required min="1">
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                    <button type="button" class="btn btn-primary" id="saveSalaBtn">Salvar Sala</button>
+                </div>
+            </div>
+        </div>
+    </div>
 
-<br/>
-
-<button id="button_click">Clique aqui</button>
-
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI"
+        crossorigin="anonymous"></script>
 </body>
-<script src="../js/script.js"></script>
-<script type="text/javascript">
-    document.getElementById("button_click").addEventListener('click', funcao_clique);
-</script>
 
 </html>
