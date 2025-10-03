@@ -36,8 +36,8 @@ classDiagram
         +ordenarSalas(): Sala[]
         +abrirModalAgendamento(): void
         +abrirModalSala(): void
-        +salvarDadosLocalStorage(): void
-        +carregarDadosLocalStorage(): void
+        +salvarDadosDBservice(): void
+        +carregarDadosDBservice(): void
     }
 
     Sala "1" -- "0..*" Agendamento : contém
@@ -82,8 +82,8 @@ classDiagram
         +ordenarSalas() Sala[]
         +abrirModalAgendamento() void
         +abrirModalSala() void
-        +salvarDadosLocalStorage() void
-        +carregarDadosLocalStorage() void
+        +salvarDadosDBservice(): void
+        +carregarDadosDBservice(): void
     }
 
     Sala "1" -- "0..*" Agendamento : contém
