@@ -7,7 +7,8 @@ Esse site tem o intuito de organizar o sistema de agendamento de salas do Colég
 * É possível ver as salas que já estão agendadas atráves de um calendario virtual e os horários que serão usadas.
 * É possível editar os própios agendamentos se for necessário.
 ---
-## Como Usar?
+Como Usar?
+
 
 
 
