@@ -29,9 +29,6 @@ Para realizar qualquer modificação (criar salas, agendar, excluir), o usuário
 Para acessar, será necessário informar um nome de usuário e senha.
 O sistema usa dados estáticos (fixos no código) para autenticar o usuário.
 
-> Atenção: Esta funcionalidade de login é apenas conceitual.
-> A implementação atual permite que qualquer pessoa realize todas as ações.
-
 ---
 
 ### Credenciais de Acesso (Estático)
@@ -72,7 +69,58 @@ Cada perfil de usuário tem permissões diferentes dentro do sistema:
 
 ---
 
+## Guia de Usuário (Como Usar)
 
+Siga este guia para aprender as funções do sistema.
 
+### 1. Criar ou Excluir uma Sala (Função de Administrador)
 
+Apenas usuários administradores podem gerenciar as salas.
 
+**Para Criar:**
+
+1. Faça login como administrador.
+2. No painel à esquerda, clique no botão **"Criar Sala"**.
+3. Preencha o formulário com Bloco, Nome, Tipo e Capacidade.
+4. Clique em **"Salvar Sala"** — a sala aparecerá na lista da esquerda.
+
+**Para Excluir:**
+
+1. Faça login como administrador.
+2. Na lista de salas, clique na sala que deseja remover.
+3. Uma janela de **"Detalhes da Sala"** aparecerá.
+4. Clique no botão vermelho **"Excluir sala"** e confirme.
+
+---
+
+### 2. Agendar um Horário (Usuários Logados)
+
+Qualquer usuário logado (aluno, professor ou administrador) pode agendar horários.
+
+1. Faça login.
+2. No calendário à direita, clique em um horário vago.
+3. Uma janela (modal) de **"Novo Agendamento"** aparecerá.
+4. Preencha o formulário:
+
+   * **Sala:** selecione a sala desejada.
+   * **Data inicial e final:** defina o período do agendamento.
+   * **Dias da semana:** marque os dias em que o evento deve se repetir (ex: Segunda e Quarta).
+   * **Horário inicial e final:** defina o horário da reserva.
+   * **Nome e responsável:** preencha quem está reservando e para qual finalidade.
+5. Clique em **"Confirmar"**.
+
+**Resultado:** Os agendamentos aparecerão como blocos coloridos no calendário.
+
+---
+
+### 3. Excluir um Agendamento
+
+1. Faça login.
+2. No calendário, encontre o agendamento que deseja remover.
+3. Clique diretamente sobre o bloco colorido do agendamento.
+4. Uma mensagem de confirmação aparecerá.
+5. Clique em **"OK"** para excluir.
+
+*Lembrete: alunos e professores só podem excluir seus próprios agendamentos.*
+
+---
