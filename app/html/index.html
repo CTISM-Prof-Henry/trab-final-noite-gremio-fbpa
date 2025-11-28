@@ -1,26 +1,261 @@
-<!DOCTYPE html>
-<html lang="pt_BR" xmlns="http://www.w3.org/1999/html">
+<!doctype html>
+<html lang="pt-br">
+
 <head>
-    <meta charset="UTF-8">
+    <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Página Inicial</title>
-    <link rel="stylesheet" href="../css/style.css">
+    <title>Agendamento de Salas</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/fullcalendar@5.11.3/main.min.css">
+    <link rel="stylesheet" href="../styles/styles.css">
 </head>
-<body>
-<h1>Página inicial</h1>
 
-<p>Uma pizza pra você!</p>
+<body class="d-flex flex-column min-vh-100 bg-light">
+    <header class="bg-white shadow-sm">
+        <div class="container-fluid py-3">
+            <div class="text-center">
+                <h2 class="mb-1">Agendamento de Salas</h2>
+                <p style="color: rgb(255, 123, 0);" class="mb-0">Colégio <span class="text-primary">Politécnico</span> UFSM</p>
+            </div>
+        </div>
+    </header>
 
-<img src="../images/pizza.jpg" alt="foto de uma pizza"/>
+    <div class="bg-white border-bottom">
+        <div class="container-fluid py-3">
+            <div class="row g-3 align-items-center">
+                <div class="col-md-4">
+                    <label class="form-label fw-bold mb-1">Filtrar por Bloco:</label>
+                    <select class="form-select" id="filtroBloco">
+                        <option value="">Todos os blocos</option>
+                    </select>
+                </div>
+                <div class="col-md-4">
+                    <label class="form-label fw-bold mb-1">Ordenar por:</label>
+                    <div class="row g-2">
+                        <div class="col-7">
+                            <select class="form-select" id="ordenarPor">
+                                <option value="nome">Nome</option>
+                                <option value="tipo">Tipo</option>
+                                <option value="capacidade">Capacidade</option>
+                            </select>
+                        </div>
+                        <div class="col-5">
+                            <select class="form-select" id="ordenarDirecao">
+                                <option value="asc">Crescente</option>
+                                <option value="desc">Decrescente</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4 text-end">
+                    <button class="btn btn-outline-primary me-2" id="btnMes">
+                        <i class="bi bi-calendar-month"></i> Mês
+                    </button>
+                    <button class="btn btn-outline-primary me-2" id="btnSemana">
+                        <i class="bi bi-calendar-week"></i> Semana
+                    </button>
+                    <button class="btn btn-outline-primary" id="btnDia">
+                        <i class="bi bi-calendar-day"></i> Dia
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
 
-<br/>
+    <main class="container-fluid flex-grow-1 py-4">
+        <div class="row g-3 h-100">
+            <div class="col-12 col-lg-3">
+                <div class="card h-100">
+                    <div class="card-body d-flex flex-column">
+                        <div class="text-center mb-3">
+                            <h5 class="mb-0" id="dataHoje"></h5>
+                        </div>
 
-<button id="button_click">Clique aqui</button>
+                        <button type="button" class="btn btn-primary btn-large mb-3 mx-auto" data-bs-toggle="modal" data-bs-target="#addSalaModal">
+                            <i class="bi bi-plus-circle-fill"></i> Criar Sala
+                        </button>
 
+                        <hr>
+
+                        <div id="listaSalas" class="overflow-auto flex-grow-1">
+                            <p class="text-muted text-center">Nenhuma sala cadastrada</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-12 col-lg-9">
+                <div class="card h-100">
+                    <div class="card-body">
+
+                        <div class="d-flex justify-content-between align-items-center mb-3">
+                            <div class="d-flex align-items-center gap-2">
+                                <button class="btn btn-outline-secondary" id="btnAnterior">
+                                    <i class="bi bi-chevron-left"></i>
+                                </button>
+                                <button class="btn btn-outline-primary" id="btnHoje">Hoje</button>
+                                <button class="btn btn-outline-secondary" id="btnProximo">
+                                    <i class="bi bi-chevron-right"></i>
+                                </button>
+                            </div>
+                            
+                            <h5 class="mb-0 fw-bold" id="tituloCalendario"></h5>
+                            
+                            <div class="d-flex align-items-center gap-2">
+                                <label class="form-label mb-0 me-1">Ir para:</label>
+                                <input type="date" class="form-control" id="inputDataCalendario" style="width: auto;">
+                            </div>
+                        </div>
+                        
+                        <p class="text-muted small mb-2">
+                            <i class="bi bi-info-circle"></i> Clique no calendário para criar um agendamento
+                        </p>
+                        
+                        <div id="calendar"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <div class="modal fade" id="addSalaModal" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Criar Nova Sala</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="formSala">
+                        <div class="mb-3">
+                            <label class="form-label">Bloco</label>
+                            <input type="text" class="form-control" id="inputBloco" required maxlength="2" placeholder="Ex: C, D, E">
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Nome da Sala</label>
+                            <input type="text" class="form-control" id="inputNome" required placeholder="Ex: 10, 05, 12">
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Tipo</label>
+                            <select class="form-select" id="inputTipo" required>
+                                <option value="Sala de aula">Sala de aula</option>
+                                <option value="Laboratório">Laboratório</option>
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Capacidade de Alunos</label>
+                            <input type="number" class="form-control" id="inputCapacidade" required min="1" placeholder="Ex: 20, 30, 40">
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                    <button type="button" class="btn btn-primary" id="btnSalvarSala">Salvar Sala</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="detalhesSalaModal" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Detalhes da Sala</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <p><strong>Bloco:</strong> <span id="detalheBloco"></span></p>
+                    <p><strong>Nome:</strong> <span id="detalheNome"></span></p>
+                    <p><strong>Tipo:</strong> <span id="detalheTipo"></span></p>
+                    <p><strong>Capacidade:</strong> <span id="detalheCapacidade"></span> alunos</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger" id="btnExcluirSala">Excluir sala</button>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="addAgendamentoModal" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Novo Agendamento</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="formAgendamento">
+                        <div class="mb-3">
+                            <label class="form-label">Sala</label>
+                            <select class="form-select" id="inputSalaAgendamento" required>
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Título do Evento</label>
+                            <input type="text" class="form-control" id="inputTituloAgendamento" required placeholder="Ex: Aula de Matemática">
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Responsável</label>
+                            <input type="text" class="form-control" id="inputResponsavel" required placeholder="Ex: Prof. João Silva">
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Data</label>
+                            <input type="date" class="form-control" id="inputDataAgendamento" required>
+                        </div>
+                        <div class="row">
+                            <div class="col-6">
+                                <div class="mb-3">
+                                    <label class="form-label">Hora Início</label>
+                                    <input type="time" class="form-control" id="inputHoraInicio" required>
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <div class="mb-3">
+                                    <label class="form-label">Hora Fim</label>
+                                    <input type="time" class="form-control" id="inputHoraFim" required>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                    <button type="button" class="btn btn-primary" id="btnSalvarAgendamento">Salvar Agendamento</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="detalhesAgendamentoModal" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Detalhes do Agendamento</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <p><strong>Evento:</strong> <span id="detalheAgendamentoTitulo"></span></p>
+                    <p><strong>Responsável:</strong> <span id="detalheAgendamentoResponsavel"></span></p>
+                    <p><strong>Sala:</strong> <span id="detalheAgendamentoSala"></span></p>
+                    <p><strong>Data:</strong> <span id="detalheAgendamentoData"></span></p>
+                    <p><strong>Horário:</strong> <span id="detalheAgendamentoHorario"></span></p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger" id="btnExcluirAgendamento">Excluir Agendamento</button>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/fullcalendar@5.11.3/main.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/fullcalendar@5.11.3/locales/pt-br.js"></script>
+    <script src="../js/src/definitions.js"></script>
+    <script src="../js/src/index.js"></script>
 </body>
-<script src="../js/script.js"></script>
-<script type="text/javascript">
-    document.getElementById("button_click").addEventListener('click', funcao_clique);
-</script>
 
 </html>

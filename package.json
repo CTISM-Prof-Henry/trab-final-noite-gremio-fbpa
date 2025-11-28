@@ -1,0 +1,15 @@
+{
+  "name": "P-Agendamento",
+  "version": "1.0.0",
+  "description": "Projeto de agendamento de salas",
+  "main": "index.js",
+  "devDependencies": {
+    "@eslint/js": "^9.38.0",
+    "eslint": "^9.38.0",
+    "globals": "^16.4.0",
+    "qunit": "^2.24.2"
+  },
+  "scripts": {
+    "test": "qunit 'app/js/test/**/*.js'"
+  }
+}
